@@ -1,21 +1,32 @@
-Frontend/node_modules
-ai-env
-
-
-
-
-Backend/node_modules
-Backend/.env
-# Node modules (frontend + backend dono)
+# Node modules
 node_modules/
+Frontend/node_modules/
+Backend/node_modules/
 
-# Environment variables
-.env
+# Python virtual environment
+ai-env/
 
-# Logs
-logs
-*.log
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Temporary files
+ai-service/temp/
+temp/
+uploads/
+
+# Embedding vectors
+embeddings/
 
 # OS files
 .DS_Store
 Thumbs.db
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.*
