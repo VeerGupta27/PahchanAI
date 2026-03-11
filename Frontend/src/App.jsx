@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import SingIn from './components/SignIn'
+import LandingPage from './pages/LandingPage'
 
 function App() {
 
@@ -11,7 +12,7 @@ function App() {
       
         <Route 
           path="/" 
-          element={<h1>Home Page</h1>} 
+          element={<LandingPage />} 
         />
        
        
