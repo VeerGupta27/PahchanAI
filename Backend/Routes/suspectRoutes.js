@@ -1,6 +1,6 @@
 import express from "express";
 import { addSuspect } from "../Controllers/suspectController.js";
-import upload from "../middleware/uploads";
+import upload from "../middleware/uploads.js";
 
 const routerSuspect = express.Router();
 
