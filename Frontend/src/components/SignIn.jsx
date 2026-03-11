@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/SignIn.css";
 
-export default function SignIn() {
+export default function SignIn({ showSignup = false }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -10,7 +10,7 @@ export default function SignIn() {
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [particles, setParticles] = useState([]);
-  const [showSignUpForm, setShowSignUpForm] = useState(false);
+  const [showSignUpForm, setShowSignUpForm] = useState(showSignup);
 
 
   useEffect(() => {
