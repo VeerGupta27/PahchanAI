@@ -4,6 +4,7 @@ import "../styles/SignIn.css";
 export default function SignIn({ showSignup = false }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("citizen");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [focused, setFocused] = useState(null);
@@ -74,7 +75,7 @@ export default function SignIn({ showSignup = false }) {
   }
 };
 
-
+  const roleOptions = ["citizen", "admin", "moderator"];
   const showSignUp = () => {setShowSignUpForm(true)};  
    
   return (
@@ -219,6 +220,20 @@ export default function SignIn({ showSignup = false }) {
                 onBlur={() => setFocused(null)}
                 required
               />
+            </div>
+          </div>
+
+        {/* role */}
+          <div className={`si-field${focused === "role" ? " active" : ""}`}>
+            <label className="si-label">Role</label>
+            <div className="si-input-wrap">
+              <span className="si-icon">✉</span>
+               <select value={role} onChange={(e) => setRole(e.target.value)}>
+               <option value="">-- Select --</option>
+               <option value="officer">Police Officer</option>
+               <option value="partner">Partner</option>
+               <option value="citizen">Citizen</option>
+           </select>
             </div>
           </div>
 
