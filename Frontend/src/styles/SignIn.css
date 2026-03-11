@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -10,6 +11,7 @@
 
 .si-root {
   min-height: 100vh;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,11 +77,11 @@
 
 .si-card {
   position: relative;
-  width: 420px;
+  width: 440px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(0, 212, 255, 0.15);
   border-radius: 24px;
-  padding: 48px 44px;
+  padding: 44px 44px 40px;
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   box-shadow:
@@ -89,6 +91,14 @@
   opacity: 0;
   transform: translateY(24px);
   animation: cardIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+  /* Allow card to grow for signup form */
+  max-height: 92vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.si-card::-webkit-scrollbar {
+  display: none;
 }
 
 @keyframes cardIn {
@@ -104,6 +114,7 @@
   height: 32px;
   border-color: rgba(0, 212, 255, 0.5);
   border-style: solid;
+  pointer-events: none;
 }
 
 .si-card::before {
@@ -133,7 +144,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 36px;
+  margin-bottom: 28px;
   opacity: 0;
   animation: fadeUp 0.5s ease 0.35s forwards;
 }
@@ -148,6 +159,7 @@
   justify-content: center;
   font-size: 18px;
   box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  flex-shrink: 0;
 }
 
 .si-logo-text {
@@ -186,12 +198,20 @@
   border-radius: 50%;
   background: #00d4ff;
   box-shadow: 0 0 6px #00d4ff;
-  animation: pulse 2s ease-in-out infinite;
+  animation: pulseDot 2s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
-@keyframes pulse {
+@keyframes pulseDot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ─── Sign-in & Sign-up Wrappers ────────────────────────── */
+
+.sign-component,
+.SignUp-component {
+  width: 100%;
 }
 
 /* ─── Headline & Subtext ────────────────────────────────── */
@@ -199,35 +219,43 @@
 .si-headline {
   font-family: 'Syne', sans-serif;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 26px;
   color: #fff;
   letter-spacing: -0.5px;
   line-height: 1.2;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   opacity: 0;
   animation: fadeUp 0.5s ease 0.45s forwards;
 }
 
 .si-sub {
-  font-size: 14px;
+  font-size: 13.5px;
   color: rgba(255, 255, 255, 0.4);
-  margin-bottom: 36px;
+  margin-bottom: 28px;
   font-weight: 300;
   opacity: 0;
   animation: fadeUp 0.5s ease 0.5s forwards;
+}
+
+/* ─── Form ──────────────────────────────────────────────── */
+
+form {
+  width: 100%;
 }
 
 /* ─── Form Fields ───────────────────────────────────────── */
 
 .si-field {
   position: relative;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
   opacity: 0;
   animation: fadeUp 0.5s ease forwards;
 }
 
 .si-field:nth-child(1) { animation-delay: 0.55s; }
 .si-field:nth-child(2) { animation-delay: 0.62s; }
+.si-field:nth-child(3) { animation-delay: 0.69s; }
+.si-field:nth-child(4) { animation-delay: 0.76s; }
 
 .si-label {
   display: block;
@@ -236,7 +264,7 @@
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.35);
-  margin-bottom: 8px;
+  margin-bottom: 7px;
   transition: color 0.2s;
 }
 
@@ -252,12 +280,13 @@
 
 .si-icon {
   position: absolute;
-  left: 16px;
+  left: 14px;
   color: rgba(255, 255, 255, 0.25);
-  font-size: 15px;
+  font-size: 14px;
   transition: color 0.2s;
   pointer-events: none;
   z-index: 1;
+  line-height: 1;
 }
 
 .si-field.active .si-icon {
@@ -269,10 +298,10 @@
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
-  padding: 14px 16px 14px 44px;
+  padding: 13px 16px 13px 42px;
   color: #fff;
   font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 400;
   outline: none;
   transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
@@ -299,14 +328,18 @@
 /* Password toggle button */
 .si-toggle {
   position: absolute;
-  right: 14px;
+  right: 12px;
   background: none;
   border: none;
   color: rgba(255, 255, 255, 0.3);
   cursor: pointer;
-  font-size: 15px;
+  font-size: 14px;
   padding: 4px;
   transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
 }
 
 .si-toggle:hover {
@@ -319,7 +352,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 28px;
+  margin-bottom: 22px;
   opacity: 0;
   animation: fadeUp 0.5s ease 0.7s forwards;
 }
@@ -345,6 +378,7 @@
   cursor: pointer;
   position: relative;
   transition: background 0.2s, border-color 0.2s;
+  flex-shrink: 0;
 }
 
 .si-checkbox:checked {
@@ -379,7 +413,7 @@
 
 .si-btn {
   width: 100%;
-  padding: 16px;
+  padding: 15px;
   background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
   border: none;
   border-radius: 12px;
@@ -395,6 +429,11 @@
   box-shadow: 0 4px 24px rgba(0, 212, 255, 0.25);
   opacity: 0;
   animation: fadeUp 0.5s ease 0.78s forwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
 }
 
 .si-btn:hover:not(:disabled) {
@@ -419,10 +458,11 @@
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
   animation: shine 2.4s ease-in-out infinite;
+  pointer-events: none;
 }
 
 @keyframes shine {
-  0%       { left: -100%; }
+  0%        { left: -100%; }
   60%, 100% { left: 150%; }
 }
 
@@ -436,18 +476,45 @@
   border-radius: 50%;
   display: inline-block;
   animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
 }
 
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
+/* ─── Divider ────────────────────────────────────────────── */
+
+.si-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0;
+  opacity: 0;
+  animation: fadeUp 0.5s ease 0.88s forwards;
+}
+
+.si-divider::before,
+.si-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.si-divider span {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.2);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
 
 /* ─── Footer ────────────────────────────────────────────── */
 
 .si-footer {
   text-align: center;
-  margin-top: 28px;
+  margin-top: 22px;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.3);
   opacity: 0;
@@ -463,4 +530,107 @@
 
 .si-footer a:hover {
   opacity: 0.8;
+}
+
+/* ─── Sign-up form re-animation ─────────────────────────── */
+
+.SignUp-component .si-headline {
+  animation-delay: 0.05s;
+}
+
+.SignUp-component .si-sub {
+  animation-delay: 0.1s;
+}
+
+.SignUp-component .si-field:nth-child(1) { animation-delay: 0.15s; }
+.SignUp-component .si-field:nth-child(2) { animation-delay: 0.22s; }
+.SignUp-component .si-field:nth-child(3) { animation-delay: 0.29s; }
+.SignUp-component .si-field:nth-child(4) { animation-delay: 0.36s; }
+
+.SignUp-component .si-btn {
+  animation-delay: 0.44s;
+}
+
+.SignUp-component .si-footer {
+  animation-delay: 0.52s;
+}
+
+/* ─── Password strength hint (optional utility) ─────────── */
+
+.si-strength {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.si-strength-bar {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.07);
+  transition: background 0.3s;
+}
+
+.si-strength-bar.weak   { background: #ff4d6d; }
+.si-strength-bar.fair   { background: #ffb703; }
+.si-strength-bar.strong { background: #00d4ff; }
+
+/* ─── Error state ───────────────────────────────────────── */
+
+.si-field.error .si-input {
+  border-color: rgba(255, 77, 109, 0.5);
+  background: rgba(255, 77, 109, 0.04);
+  box-shadow: 0 0 0 3px rgba(255, 77, 109, 0.08);
+}
+
+.si-field.error .si-label {
+  color: rgba(255, 77, 109, 0.8);
+}
+
+.si-field.error .si-icon {
+  color: rgba(255, 77, 109, 0.6);
+}
+
+.si-error-msg {
+  font-size: 11.5px;
+  color: rgba(255, 77, 109, 0.8);
+  margin-top: 5px;
+  padding-left: 2px;
+}
+
+/* ─── Success state ─────────────────────────────────────── */
+
+.si-field.success .si-input {
+  border-color: rgba(0, 255, 170, 0.4);
+  background: rgba(0, 255, 170, 0.03);
+}
+
+.si-field.success .si-label {
+  color: rgba(0, 255, 170, 0.7);
+}
+
+/* ─── Responsive ────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .si-card {
+    width: calc(100vw - 32px);
+    padding: 36px 28px 32px;
+    border-radius: 20px;
+    max-height: 95vh;
+  }
+
+  .si-headline {
+    font-size: 22px;
+  }
+
+  .si-btn {
+    padding: 14px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .si-card {
+    padding: 28px 20px 24px;
+  }
 }

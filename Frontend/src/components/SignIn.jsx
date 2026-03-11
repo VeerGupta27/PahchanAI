@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "../Styles/SignIn.css";
+import "../styles/SignIn.css";
 
 export default function SignIn() {
   const [name, setName] = useState("");
@@ -28,42 +28,7 @@ export default function SignIn() {
  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    try {
-      const BASE = 'http://localhost:5000/api';
-      if (showSignUpForm) {
-        if (password !== confirmPassword) {
-          alert('Passwords do not match!');
-          setLoading(false);
-          return;
-        }
-        const res = await fetch(`${BASE}/auth/register`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, password }),
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message);
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        window.location.href = '/';
-      } else {
-        const res = await fetch(`${BASE}/auth/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message);
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        window.location.href = '/';
-      }
-    } catch (err) {
-      alert(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+ }
 
 
   const showSignUp = () => {setShowSignUpForm(true)};  
@@ -101,7 +66,7 @@ export default function SignIn() {
         <div className="si-logo-wrap">
           <div className="si-logo-icon">⬡</div>
           <div className="si-logo-text">
-            AI<span>Fintech</span>
+            Pahchan<span>AI</span>
           </div>
         </div>
 
@@ -113,7 +78,7 @@ export default function SignIn() {
 
         {!showSignUpForm && (<div className="sign-component">
         <h2 className="si-headline">Welcome back</h2>
-        <p className="si-sub">Sign in to your AI-Fintech account</p>
+        <p className="si-sub">SignIn to your account</p>
 
         <form onSubmit={handleSubmit}>
 
@@ -189,8 +154,8 @@ export default function SignIn() {
 
     {showSignUpForm && (
       <div className="SignUp-component" >
-        <h2 className="si-headline">Join AI-Fintech</h2>
-        <p className="si-sub">Create your account to start your financial journey</p>
+        <h2 className="si-headline">Join Us</h2>
+        <p className="si-sub">Create account.</p>
         
         
         <form onSubmit={handleSubmit}>
