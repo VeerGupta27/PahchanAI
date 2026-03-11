@@ -1,5 +1,6 @@
 import dns from "node:dns";
 dns.setDefaultResultOrder("ipv4first");
+import mongoose from "mongoose";   
 
 import express from "express";
 import cors from "cors";
