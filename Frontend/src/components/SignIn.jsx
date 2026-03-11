@@ -26,9 +26,53 @@ export default function SignIn() {
   }, []);
 
  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
- }
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    const BASE = 'https://pahchanai.onrender.com';
+
+    if (showSignUpForm) {
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        setLoading(false);
+        return;
+      }
+
+      const res = await fetch(`${BASE}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      window.location.href = '/dashboard';
+
+    } else {
+      const res = await fetch(`${BASE}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      window.location.href = '/dashboard';
+    }
+
+  } catch (err) {
+    alert(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
 
   const showSignUp = () => {setShowSignUpForm(true)};  

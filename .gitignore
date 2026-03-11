@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Frontend/node_modules
 
 
@@ -5,3 +6,18 @@ Frontend/node_modules
 
 Backend/node_modules
 Backend/.env
+=======
+# Node modules (frontend + backend dono)
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+>>>>>>> ffc8dadb8720372b1a193189feff1a2342fd89d7
