@@ -75,7 +75,7 @@ export default function SignIn({ showSignup = false }) {
   }
 };
 
-  const roleOptions = ["citizen", "admin", "moderator"];
+
   const showSignUp = () => {setShowSignUpForm(true)};  
    
   return (
@@ -230,7 +230,7 @@ export default function SignIn({ showSignup = false }) {
               <span className="si-icon">✉</span>
                <select value={role} onChange={(e) => setRole(e.target.value)}>
                <option value="">-- Select --</option>
-               <option value="officer">Police Officer</option>
+               <option value="police">Police Officer</option>
                <option value="partner">Partner</option>
                <option value="citizen">Citizen</option>
            </select>
