@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
+import SingIn from './components/SignIn'
 
 function App() {
 
@@ -16,7 +17,8 @@ function App() {
        
         <Route 
           path="/signin" 
-          element={<h1>Sign In Page</h1>} 
+          element={
+            <SingIn />} 
         />
 
       </Routes>
