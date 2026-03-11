@@ -1,3 +1,10 @@
+Frontend/node_modules
+
+
+
+
+Backend/node_modules
+Backend/.env
 # Node modules (frontend + backend dono)
 node_modules/
 
