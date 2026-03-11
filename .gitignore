@@ -1,2 +1,21 @@
 Frontend/node_modules
 ai-env
+
+
+
+
+Backend/node_modules
+Backend/.env
+# Node modules (frontend + backend dono)
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
