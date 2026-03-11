@@ -13,7 +13,14 @@ const port = process.env.PORT || 4000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.get("/testdb", async (req, res) => {
+  const data = await mongoose.connection.db.collection("test").insertOne({
+    name: "PahchanAI",
+    createdAt: new Date()
+  });
 
+  res.send("Data inserted successfully");
+});
 connectDB();
 
 app.listen(port, () => console.log("server started " + port));
