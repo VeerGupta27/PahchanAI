@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/SignIn.css";
 
-export default function SignIn() {
+export default function SignIn({ showSignup = false }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -10,7 +10,7 @@ export default function SignIn() {
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [particles, setParticles] = useState([]);
-  const [showSignUpForm, setShowSignUpForm] = useState(false);
+  const [showSignUpForm, setShowSignUpForm] = useState(showSignup);
 
 
   useEffect(() => {
@@ -26,9 +26,53 @@ export default function SignIn() {
   }, []);
 
  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
- }
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    const BASE = 'https://pahchanai.onrender.com';
+
+    if (showSignUpForm) {
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        setLoading(false);
+        return;
+      }
+
+      const res = await fetch(`${BASE}/users/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      window.location.href = '/dashboard';
+
+    } else {
+      const res = await fetch(`${BASE}/users/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      window.location.href = '/dashboard';
+    }
+
+  } catch (err) {
+    alert(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
 
   const showSignUp = () => {setShowSignUpForm(true)};  
