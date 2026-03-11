@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom"
 import LandingPage from "./pages/LandingPage"
 import SignIn from "./components/SignIn"
+import Dashboard from "./dashboard/Dashboard"
 
 function App() {
   return (
@@ -8,6 +9,12 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignIn showSignup={true} />} />
+
+      <Route 
+        path="/dashboard"  
+        element={<Dashboard />} 
+      />
+
     </Routes>
   )
 }
