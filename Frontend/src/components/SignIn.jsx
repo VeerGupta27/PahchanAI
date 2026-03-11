@@ -39,7 +39,7 @@ export default function SignIn() {
         return;
       }
 
-      const res = await fetch(`${BASE}/auth/register`, {
+      const res = await fetch(`${BASE}/users/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password }),
@@ -53,7 +53,7 @@ export default function SignIn() {
       window.location.href = '/dashboard';
 
     } else {
-      const res = await fetch(`${BASE}/auth/login`, {
+      const res = await fetch(`${BASE}/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
