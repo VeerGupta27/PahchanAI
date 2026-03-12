@@ -4,7 +4,7 @@ export const sendAlertEmail = (data) => {
 
   emailjs.send(
     "service_mwi1bfj",
-    "template_xxxxx",
+    "template_w5mqu0q",
     {
       name: data.name,
       location: data.location,

@@ -32,12 +32,13 @@ export const addSuspect = async (req, res) => {
 
     }
 
-    const suspect = await Suspect.create({
-      name: req.body.name,
-      location: req.body.location,
-      image: imagePath,
-      embedding: embeddingPath
-    });
+  const suspect = await Suspect.create({
+  name: req.body.name,
+  location: req.body.location,
+  reporterEmail: req.body.email,
+  image: imagePath,
+  embedding: embeddingPath
+});
 
     res.status(201).json({
       message: "Suspect added successfully",
