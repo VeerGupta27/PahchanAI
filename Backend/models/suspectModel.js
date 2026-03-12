@@ -15,8 +15,8 @@ const suspectSchema = new mongoose.Schema({
   },
 
   embedding: {
-    type: String
-  },
+  type: [Number]
+},
    reporterEmail: {
     type: String,
     required: true
