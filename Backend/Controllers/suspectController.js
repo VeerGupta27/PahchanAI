@@ -53,3 +53,25 @@ export const addSuspect = async (req, res) => {
 
   }
 };
+export const getAllSuspects = async (req, res) => {
+  try {
+
+    const suspects = await Suspect.find().sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: suspects.length,
+      suspects
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch suspects"
+    });
+
+  }
+};
