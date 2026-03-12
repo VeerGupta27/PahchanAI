@@ -3,16 +3,19 @@ import fs from "fs";
 import FormData from "form-data";
 import Suspect from "../models/suspectModel.js";
 
-
 export const addSuspect = async (req, res) => {
   try {
-    console.log("Suspect routes loaded");
 
     const imagePath = req.file?.path;
 
+    if (!imagePath) {
+      return res.status(400).json({
+        message: "Image upload failed"
+      });
+    }
+
     let embeddingPath = null;
 
-    // Try calling AI service
     try {
 
       const formData = new FormData();
@@ -21,24 +24,36 @@ export const addSuspect = async (req, res) => {
       const response = await axios.post(
         "https://pahchanai-1.onrender.com/generate-embedding",
         formData,
-        { headers: formData.getHeaders() }
+        {
+          headers: formData.getHeaders(),
+          timeout: 60000
+        }
       );
 
-      embeddingPath = response.data.embedding_path;
+      console.log("AI RESPONSE:", response.data);
+
+      if (response.data && response.data.embedding_file) {
+        embeddingPath = response.data.embedding_file;
+      }
 
     } catch (aiError) {
 
+      console.error("AI error:", aiError.message);
       console.log("AI service not available, skipping embedding");
 
     }
 
-  const suspect = await Suspect.create({
-  name: req.body.name,
-  location: req.body.location,
-  reporterEmail: req.body.email,
-  image: imagePath,
-  embedding: embeddingPath
-});
+    console.log("Embedding to save:", embeddingPath);
+
+    const suspect = await Suspect.create({
+      name: req.body.name,
+      location: req.body.location,
+      reporterEmail: req.body.email,
+      image: imagePath,
+      embedding: embeddingPath || null
+    });
+
+    console.log("Saved suspect:", suspect);
 
     res.status(201).json({
       message: "Suspect added successfully",
@@ -47,7 +62,7 @@ export const addSuspect = async (req, res) => {
 
   } catch (error) {
 
-    console.error(error);
+    console.error("CREATE SUSPECT ERROR:", error);
 
     res.status(500).json({
       message: "Failed to add suspect"
@@ -55,6 +70,7 @@ export const addSuspect = async (req, res) => {
 
   }
 };
+
 export const getAllSuspects = async (req, res) => {
   try {
 
