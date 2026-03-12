@@ -5,6 +5,7 @@ import Suspect from "../models/suspectModel.js";
 
 export const addSuspect = async (req, res) => {
   try {
+    console.log("Suspect routes loaded");
 
     const imagePath = req.file?.path;
 
@@ -17,7 +18,7 @@ export const addSuspect = async (req, res) => {
       formData.append("file", fs.createReadStream(imagePath));
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/generate-embedding",
+        "https://pahchanai-1.onrender.com/generate-embedding",
         formData,
         { headers: formData.getHeaders() }
       );
@@ -48,6 +49,28 @@ export const addSuspect = async (req, res) => {
 
     res.status(500).json({
       message: "Failed to add suspect"
+    });
+
+  }
+};
+export const getAllSuspects = async (req, res) => {
+  try {
+
+    const suspects = await Suspect.find().sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: suspects.length,
+      suspects
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch suspects"
     });
 
   }
