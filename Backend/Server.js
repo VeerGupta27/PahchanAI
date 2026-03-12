@@ -8,6 +8,7 @@ import "dotenv/config";
 import connectDB from "./Config/Mondodb.js";
 import userRouter from './Routes/userRouter.js'
 import routerSuspect from "./Routes/suspectRoutes.js";
+import router from "./Routes/embeddingsRoutes.js";
 const app = express();
 
  
@@ -20,6 +21,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use("/users", userRouter);
+app.use("/api", router);
+
+
 app.use('/ai', routerSuspect)
 
 app.get("/testdb", async (req, res) => {
