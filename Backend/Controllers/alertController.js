@@ -1,4 +1,4 @@
-import Alert from "../models/alertModel";
+import Alert from "../models/alertModel.js";
 export const createAlert = async (req, res) => {
 
   try {
