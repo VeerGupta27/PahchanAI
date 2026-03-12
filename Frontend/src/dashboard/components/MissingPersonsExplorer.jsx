@@ -104,7 +104,7 @@ function NewCaseModal({ onClose, onSubmit }) {
       formData.append("status",         form.priority);
       if (photoFile) formData.append("photo", photoFile);
 
-      const res = await fetch(`${BASE}/missing`, {
+      const res = await fetch(`${BASE}/ai/add-suspect`, {
         method: "POST",
         // ⚠️ No Content-Type header — browser sets multipart boundary automatically
         body: formData,
