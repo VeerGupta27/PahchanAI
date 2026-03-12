@@ -1,4 +1,4 @@
-import "./StatsRow.css";
+import "./dashboard.css";
 import { useRole } from "../context/RoleContext";
 
 function Sparkline({ color, points }) {

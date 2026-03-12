@@ -1,5 +1,5 @@
 import { useRole } from "./context/RoleContext";
-import "./RoleBadge.css";
+import "./dashboard.css";
 
 export default function RoleBadge({ size = "md" }) {
   const { role, meta } = useRole();
