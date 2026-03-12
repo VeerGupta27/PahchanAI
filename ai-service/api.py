@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, HTTPException
 import shutil
 import uuid
 import os
@@ -16,15 +16,19 @@ if not os.path.exists(TEMP_DIR):
 async def create_embedding(file: UploadFile = File(...)):
 
     person_id = str(uuid.uuid4())
-
     image_path = f"{TEMP_DIR}/{person_id}.jpg"
 
     with open(image_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    embedding_path = generate_embedding(image_path, person_id)
+    embedding = generate_embedding(image_path)
+
+    os.remove(image_path)
+
+    if embedding is None:
+        raise HTTPException(status_code=422, detail="No face detected in image.")
 
     return {
         "person_id": person_id,
-        "embedding_path": embedding_path
+        "embedding": embedding.tolist()  # ← 512 numbers array
     }
