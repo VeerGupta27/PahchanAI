@@ -3,6 +3,7 @@ import shutil
 import uuid
 import os
 
+
 from face_embedding.generate_embedding import generate_embedding
 
 app = FastAPI()
