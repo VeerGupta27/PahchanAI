@@ -18,15 +18,10 @@
     "dns": "^0.2.2",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
-<<<<<<< HEAD
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.3.0",
     "multer": "^2.1.1",
     "nodemon": "^3.1.14",
     "validator": "^13.15.26"
-=======
-    "mongoose": "^9.3.0",
-    "nodemon": "^3.1.14"
->>>>>>> 6585da777b7565c358125ffe79d052f8bfdeff5e
   }
 }
