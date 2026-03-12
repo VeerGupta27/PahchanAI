@@ -18,7 +18,7 @@ export const addSuspect = async (req, res) => {
       formData.append("file", fs.createReadStream(imagePath));
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/generate-embedding",
+        "https://pahchanai-1.onrender.com/generate-embedding",
         formData,
         { headers: formData.getHeaders() }
       );
