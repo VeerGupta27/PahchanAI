@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use("/users", userRouter);
 app.use('/ai', routerSuspect)
-app.use("/missing", missingRouter); 
+
 app.get("/testdb", async (req, res) => {
   const data = await mongoose.connection.db.collection("test").insertOne({
     name: "PahchanAI",
