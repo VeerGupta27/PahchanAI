@@ -78,10 +78,9 @@ function NewCaseModal({ onClose, onSubmit }) {
   const validate = () => {
     const e = {};
     if (!form.name.trim())     e.name     = "Full name is required";
-    if (!form.age)             e.age      = "Age is required";
-    if (!form.gender)          e.gender   = "Please select a gender";
+ 
     if (!form.location.trim()) e.location = "Last seen location is required";
-    if (!form.contact.trim())  e.contact  = "Contact number is required";
+
     return e;
   };
 
@@ -94,14 +93,9 @@ function NewCaseModal({ onClose, onSubmit }) {
       // Must use FormData because we're sending a file
       const formData = new FormData();
       formData.append("name",           form.name);
-      formData.append("age",            form.age);
-      formData.append("gender",         form.gender.toLowerCase());
       formData.append("last_seen",      form.location);
-      formData.append("landmark",       form.landmark);
-      formData.append("last_seen_date", form.lastSeenDate);
       formData.append("contact",        form.contact);
-      formData.append("description",    form.description);
-      formData.append("status",         form.priority);
+      formData.append("email",    form.reporterEmail);
       if (photoFile) formData.append("photo", photoFile);
 
       const res = await fetch(`${BASE}/missing`, {
@@ -183,34 +177,10 @@ function NewCaseModal({ onClose, onSubmit }) {
                   name="name" value={form.name} onChange={handleChange} placeholder="e.g. Anya Sharma" />
                 {errors.name && <span className="modal-error">{errors.name}</span>}
               </div>
-              <div className="modal-field">
-                <label className="modal-label">Age *</label>
-                <input className={`modal-input${errors.age ? " input-error" : ""}`}
-                  name="age" value={form.age} onChange={handleChange} placeholder="e.g. 16" type="number" min="0" max="120" />
-                {errors.age && <span className="modal-error">{errors.age}</span>}
-              </div>
+              
             </div>
 
-            <div className="modal-row">
-              <div className="modal-field">
-                <label className="modal-label">Gender *</label>
-                <select className={`modal-input${errors.gender ? " input-error" : ""}`}
-                  name="gender" value={form.gender} onChange={handleChange}>
-                  <option value="">Select gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
-                {errors.gender && <span className="modal-error">{errors.gender}</span>}
-              </div>
-              <div className="modal-field">
-                <label className="modal-label">Priority Level</label>
-                <select className="modal-input" name="priority" value={form.priority} onChange={handleChange}>
-                  <option value="high_priority">High Priority</option>
-                  <option value="ai_match_pending">Standard</option>
-                </select>
-              </div>
-            </div>
+            
 
             <div className="modal-section-label">Last Known Location</div>
             <div className="modal-row">
@@ -220,32 +190,20 @@ function NewCaseModal({ onClose, onSubmit }) {
                   name="location" value={form.location} onChange={handleChange} placeholder="City, Area, Street" />
                 {errors.location && <span className="modal-error">{errors.location}</span>}
               </div>
-              <div className="modal-field">
-                <label className="modal-label">Nearby Landmark</label>
-                <input className="modal-input"
-                  name="landmark" value={form.landmark} onChange={handleChange} placeholder="e.g. Near Central Station" />
-              </div>
+             
             </div>
 
-            <div className="modal-field">
-              <label className="modal-label">Date Last Seen</label>
-              <input className="modal-input" name="lastSeenDate" value={form.lastSeenDate} onChange={handleChange} type="date" />
-            </div>
+           
 
-            <div className="modal-section-label">Reporter Contact</div>
+            <div className="modal-section-label">Reporter Email</div>
             <div className="modal-field">
-              <label className="modal-label">Contact Number *</label>
+              <label className="modal-label">Email*</label>
               <input className={`modal-input${errors.contact ? " input-error" : ""}`}
-                name="contact" value={form.contact} onChange={handleChange} placeholder="+91 XXXXX XXXXX" />
+                name="email" value={form.reporterEmail} onChange={handleChange} placeholder="+91 XXXXX XXXXX" />
               {errors.contact && <span className="modal-error">{errors.contact}</span>}
             </div>
 
-            <div className="modal-field">
-              <label className="modal-label">Additional Description</label>
-              <textarea className="modal-input modal-textarea"
-                name="description" value={form.description} onChange={handleChange} rows={3}
-                placeholder="Clothing, physical features, circumstances of disappearance…" />
-            </div>
+          
 
             {errors.submit && (
               <div className="modal-error" style={{ textAlign: "center", padding: "8px" }}>
