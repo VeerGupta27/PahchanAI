@@ -5,59 +5,53 @@ import "./dashboard.css";
 import { RoleProvider, ROLES, DEFAULT_NAV, useRole } from "./context/RoleContext";
 
 // Layout
-import Sidebar from "./components/Sidebar";
-import Topbar  from "./components/Topbar";
+import Sidebar  from "./components/Sidebar";
+import Topbar   from "./components/Topbar";
 
 // Dashboard home panels
-import StatsRow            from "./components/StatsRow";
-import ActivityFeed        from "./components/ActivityFeed";
-import MissingPersonsTable from "./components/MissingPersonsTable";
-import AIMatchPanel        from "./components/AIMatchPanel";
+import StatsRow      from "./components/StatsRow";
+import LiveFeed      from "./components/LiveFeed";       // merged: ActivityFeed + Alerts
+import MissingPersons from "./components/MissingPersons"; // merged: Explorer + Table
+import AIMatches     from "./components/AIMatches";      // merged: AIMatchPanel + AIMatchResults
 
 // Full page views
-import MissingPersonsExplorer from "./components/MissingPersonsExplorer";
-import ReportSighting         from "./components/ReportSighting";
-import AIMatchResults         from "./components/AIMatchResults";
-import CaseTimeline           from "./components/CaseTimeline";
-import Alerts                 from "./components/Alerts";
+import ReportSighting from "./components/ReportSighting";
+import CaseTimeline   from "./components/CaseTimeline";
 
-/* ─── Page views ─────────────────────────────────────────────── */
+/* ─── Dashboard home layout ──────────────────────────────────── */
 function DashboardHome() {
   return (
     <>
       <StatsRow />
       <div className="dashboard-mid-row">
-       
-        <ActivityFeed />
+        <LiveFeed />
       </div>
       <div className="dashboard-bottom-row">
-        <MissingPersonsTable />
-        <AIMatchPanel />
+        <MissingPersons />
+        <AIMatches panel />
       </div>
     </>
   );
 }
 
-
-
+/* ─── Page router ────────────────────────────────────────────── */
 function renderView(activeNav) {
   switch (activeNav) {
     case "dashboard": return <DashboardHome />;
-    case "missing":   return <MissingPersonsExplorer />;
+    case "missing":   return <MissingPersons />;
     case "sighting":  return <ReportSighting />;
-    case "ai-match":  return <AIMatchResults />;
+    case "ai-match":  return <AIMatches />;
     case "timeline":  return <CaseTimeline />;
-    case "alerts":    return <Alerts />;
+    case "alerts":    return <LiveFeed />;   // LiveFeed shows Alerts tab by default when routed here
     default:          return <DashboardHome />;
   }
 }
 
-/* ─── Inner shell — lives inside RoleProvider ─────────────────── */
+/* ─── Inner shell ────────────────────────────────────────────── */
 function DashboardShell({ onRoleChange }) {
   const { role } = useRole();
   const [activeNav, setActiveNav] = useState(() => DEFAULT_NAV[role]);
 
-  // When the role-switcher fires, reset nav to the new role's default page
   const handleRoleChange = (newRole) => {
     onRoleChange(newRole);
     setActiveNav(DEFAULT_NAV[newRole]);
@@ -76,20 +70,15 @@ function DashboardShell({ onRoleChange }) {
   );
 }
 
-/* ─── Root export ─────────────────────────────────────────────── */
+/* ─── Root export ────────────────────────────────────────────── */
 /**
- * Usage in your router / app:
- *
+ * Usage:
  *   <Dashboard role={currentUser.role} />
  *
- * Valid role values: "officer" | "partner" | "citizen"
- * Pass the role from your auth context/JWT — Dashboard is fully controlled externally.
- * The demo role-switcher in the Topbar is available during development.
+ * Valid roles: "officer" | "partner" | "citizen"
  */
 export default function Dashboard({ role: initialRole = ROLES.OFFICER }) {
-  // Lift role state here so the Topbar switcher can update it
   const [role, setRole] = useState(initialRole);
-
   return (
     <RoleProvider role={role}>
       <DashboardShell onRoleChange={setRole} />

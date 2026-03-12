@@ -1,4 +1,4 @@
-import "./Sidebar.css";
+import "./dashboard.css";
 import { useRole, ROLE_META } from "../context/RoleContext";
 import RoleBadge from "../RoleBadge";
 
