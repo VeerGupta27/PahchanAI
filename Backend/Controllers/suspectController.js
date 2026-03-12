@@ -3,10 +3,8 @@ import fs from "fs";
 import FormData from "form-data";
 import Suspect from "../models/suspectModel.js";
 
-
 export const addSuspect = async (req, res) => {
   try {
-    console.log("Suspect routes loaded");
 
     const imagePath = req.file?.path;
     if (!imagePath) {
@@ -15,7 +13,6 @@ export const addSuspect = async (req, res) => {
 
     let embedding = null;
 
-    // Try calling AI service
     try {
       const formData = new FormData();
       formData.append("file", fs.createReadStream(imagePath));
@@ -23,7 +20,10 @@ export const addSuspect = async (req, res) => {
       const response = await axios.post(
         "https://pahchanai-1.onrender.com/generate-embedding",
         formData,
-        { headers: formData.getHeaders() }
+        {
+          headers: formData.getHeaders(),
+          timeout: 60000
+        }
       );
 
       embedding = response.data.embedding; // ← array of 512 numbers
@@ -52,6 +52,7 @@ export const addSuspect = async (req, res) => {
     });
   }
 };
+
 
 export const getAllSuspects = async (req, res) => {
   try {
