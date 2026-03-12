@@ -30,6 +30,11 @@ async def create_embedding(file: UploadFile = File(...)):
     # generate embedding
     embedding_path = generate_embedding(image_path, person_id)
 
+    if embedding_path is None:
+        return {
+            "error": "No face detected in image"
+        }
+
     embedding_file = os.path.basename(embedding_path)
 
     return {
