@@ -43,7 +43,7 @@ export default function SignIn({ showSignup = false }) {
       const res = await fetch(`${BASE}/users/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password,role }),
       });
 
       const data = await res.json();

@@ -8,9 +8,13 @@ import "dotenv/config";
 import connectDB from "./Config/Mondodb.js";
 import userRouter from './Routes/userRouter.js'
 import routerSuspect from "./Routes/suspectRoutes.js";
+import router from "./Routes/embeddingsRoutes.js";
 const app = express();
+import path from "path";
 
-import missingRouter from "./Routes/missingroute.js";  
+app.use("/uploads", express.static("uploads"));
+
+ 
 
 
 
@@ -20,8 +24,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use("/users", userRouter);
+app.use("/api", router);
+
+
 app.use('/ai', routerSuspect)
-app.use("/missing", missingRouter); 
+
 app.get("/testdb", async (req, res) => {
   const data = await mongoose.connection.db.collection("test").insertOne({
     name: "PahchanAI",
