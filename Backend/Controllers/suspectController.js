@@ -3,6 +3,7 @@ import fs from "fs";
 import FormData from "form-data";
 import Suspect from "../models/suspectModel.js";
 
+
 export const addSuspect = async (req, res) => {
   try {
     console.log("Suspect routes loaded");
