@@ -6,19 +6,29 @@ import Suspect from "../models/suspectModel.js";
 export const addSuspect = async (req, res) => {
   try {
 
-    const imagePath = req.file.path;
+    const imagePath = req.file?.path;
 
-    const formData = new FormData();
-    formData.append("file", fs.createReadStream(imagePath));
+    let embeddingPath = null;
 
-    // call Python AI service
-    const response = await axios.post(
-      "http://127.0.0.1:8000/generate-embedding",
-      formData,
-      { headers: formData.getHeaders() }
-    );
+    // Try calling AI service
+    try {
 
-    const embeddingPath = response.data.embedding_path;
+      const formData = new FormData();
+      formData.append("file", fs.createReadStream(imagePath));
+
+      const response = await axios.post(
+        "http://127.0.0.1:8000/generate-embedding",
+        formData,
+        { headers: formData.getHeaders() }
+      );
+
+      embeddingPath = response.data.embedding_path;
+
+    } catch (aiError) {
+
+      console.log("AI service not available, skipping embedding");
+
+    }
 
     const suspect = await Suspect.create({
       name: req.body.name,
@@ -27,10 +37,18 @@ export const addSuspect = async (req, res) => {
       embedding: embeddingPath
     });
 
-    res.status(201).json(suspect);
+    res.status(201).json({
+      message: "Suspect added successfully",
+      suspect
+    });
 
   } catch (error) {
+
     console.error(error);
-    res.status(500).json({ message: "Failed to add suspect" });
+
+    res.status(500).json({
+      message: "Failed to add suspect"
+    });
+
   }
 };
