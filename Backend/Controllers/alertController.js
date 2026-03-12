@@ -1,17 +1,24 @@
 import Alert from "../models/alertModel.js";
+import Suspect from "../models/suspectModel.js";
+
 export const createAlert = async (req, res) => {
 
   try {
 
+    const { name, location, confidence } = req.body;
+
+    const suspect = await Suspect.findOne({ name });
+
     const alert = await Alert.create({
-      name: req.body.name,
-      location: req.body.location,
-      confidence: req.body.confidence
+      name,
+      location,
+      confidence
     });
 
     res.json({
       success: true,
-      alert
+      alert,
+      reporterEmail: suspect?.reporterEmail
     });
 
   } catch (err) {
