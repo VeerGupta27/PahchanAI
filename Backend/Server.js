@@ -10,6 +10,9 @@ import userRouter from './Routes/userRouter.js'
 import routerSuspect from "./Routes/suspectRoutes.js";
 import router from "./Routes/embeddingsRoutes.js";
 const app = express();
+import path from "path";
+
+app.use("/uploads", express.static("uploads"));
 
  
 
