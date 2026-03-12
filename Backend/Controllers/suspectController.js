@@ -24,8 +24,7 @@ export const addSuspect = async (req, res) => {
         { headers: formData.getHeaders() }
       );
 
-      embeddingPath = response.data.embedding_path;
-
+         embeddingPath = response.data.embedding_file;
     } catch (aiError) {
 
       console.log("AI service not available, skipping embedding");
