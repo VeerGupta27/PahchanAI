@@ -9,6 +9,9 @@ export const addSuspect = async (req, res) => {
     console.log("Suspect routes loaded");
 
     const imagePath = req.file?.path;
+    if (!imagePath) {
+      return res.status(400).json({ message: "Image file is required" });
+    }
 
     let embeddingPath = null;
 
