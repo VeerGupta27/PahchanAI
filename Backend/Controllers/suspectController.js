@@ -7,6 +7,9 @@ export const addSuspect = async (req, res) => {
   try {
 
     const imagePath = req.file?.path;
+    if (!imagePath) {
+      return res.status(400).json({ message: "Image file is required" });
+    }
 
     if (!imagePath) {
       return res.status(400).json({

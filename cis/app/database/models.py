@@ -48,7 +48,7 @@ class MatchEvent(Base):
     matched_person_id = Column(String(64), nullable=False, index=True)
     similarity_score = Column(Float, nullable=False)
     location_hint = Column(String(256), nullable=True)
-    metadata = Column(JSON, nullable=True)
+    extra_data = Column(JSON, nullable=True)
     received_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 
