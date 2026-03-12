@@ -3,16 +3,13 @@ import fs from "fs";
 import FormData from "form-data";
 import Suspect from "../models/suspectModel.js";
 
-
 export const addSuspect = async (req, res) => {
   try {
-    console.log("Suspect routes loaded");
 
     const imagePath = req.file?.path;
 
     let embeddingPath = null;
 
-    // Try calling AI service
     try {
 
       const formData = new FormData();
@@ -24,20 +21,26 @@ export const addSuspect = async (req, res) => {
         { headers: formData.getHeaders() }
       );
 
-         embeddingPath = response.data.embedding_file;
+      console.log("AI RESPONSE:", response.data);
+
+      embeddingPath = response.data.embedding_file;
+
     } catch (aiError) {
 
+      console.error("AI error:", aiError.message);
       console.log("AI service not available, skipping embedding");
 
     }
+    console.log("Embedding to save:", embeddingPath);
 
-  const suspect = await Suspect.create({
-  name: req.body.name,
-  location: req.body.location,
-  reporterEmail: req.body.email,
-  image: imagePath,
-  embedding: embeddingPath
-});
+
+    const suspect = await Suspect.create({
+      name: req.body.name,
+      location: req.body.location,
+      reporterEmail: req.body.email,
+      image: imagePath,
+      embedding: embeddingPath
+    });
 
     res.status(201).json({
       message: "Suspect added successfully",
@@ -54,6 +57,7 @@ export const addSuspect = async (req, res) => {
 
   }
 };
+
 export const getAllSuspects = async (req, res) => {
   try {
 
