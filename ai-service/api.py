@@ -16,7 +16,7 @@ EMBEDDING_DIR = os.path.join(BASE_DIR, "embeddings")
 os.makedirs(TEMP_DIR, exist_ok=True)
 os.makedirs(EMBEDDING_DIR, exist_ok=True)
 
-# 🔥 IMPORTANT: Serve embeddings publicly
+# serve embeddings folder publicly
 app.mount("/embeddings", StaticFiles(directory=EMBEDDING_DIR), name="embeddings")
 
 
@@ -36,13 +36,18 @@ async def create_embedding(file: UploadFile = File(...)):
 
     if embedding_path is None:
         return {
-            "error": "No face detected in image"
+            "success": False,
+            "message": "No face detected in image"
         }
 
     embedding_file = os.path.basename(embedding_path)
 
+    # full public URL
+    embedding_url = f"https://pahchanai-1.onrender.com/embeddings/{embedding_file}"
+
     return {
+        "success": True,
         "person_id": person_id,
         "embedding_file": embedding_file,
-        "embedding_url": f"/embeddings/{embedding_file}"
+        "embedding_url": embedding_url
     }
