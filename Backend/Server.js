@@ -9,12 +9,17 @@ import connectDB from "./Config/Mondodb.js";
 import userRouter from './Routes/userRouter.js'
 const app = express();
 
+import missingRouter from './Routes/missingRouter.js'  
+
+
+
 const port = process.env.PORT || 4000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use("/users", userRouter);
+app.use("/missing", missingRouter); 
 app.get("/testdb", async (req, res) => {
   const data = await mongoose.connection.db.collection("test").insertOne({
     name: "PahchanAI",
