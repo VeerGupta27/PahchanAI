@@ -6,7 +6,7 @@ import {
   updateCase,
   deleteCase,
 } from "../controllers/missing.controller.js";
-import { upload } from "../config/cloudinary.js";
+import { upload } from "../Config/cloudinary.js";
 
 const router = express.Router();
 
