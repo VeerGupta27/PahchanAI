@@ -6,4 +6,4 @@ const routerSuspect = express.Router();
 
 routerSuspect.post("/add-suspect", upload.single("image"), addSuspect);
 
-export default router;
+export default routerSuspect;
