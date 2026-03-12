@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+redis
+asyncpg
+sqlalchemy[asyncio]
+alembic
+psycopg[binary]
+numpy
+pydantic
+pydantic-settings
+python-dotenv
+httpx
+structlog

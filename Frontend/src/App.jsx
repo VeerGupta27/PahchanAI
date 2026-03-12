@@ -11,10 +11,7 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/signup" element={<SignIn showSignup={true} />} />
 
-      <Route 
-        path="/dashboard"  
-        element={<Dashboard />} 
-      />
+      
 
     </Routes>
   )

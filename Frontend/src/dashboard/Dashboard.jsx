@@ -10,7 +10,6 @@ import Topbar  from "./components/Topbar";
 
 // Dashboard home panels
 import StatsRow            from "./components/StatsRow";
-import MapPanel            from "./components/MapPanel";
 import ActivityFeed        from "./components/ActivityFeed";
 import MissingPersonsTable from "./components/MissingPersonsTable";
 import AIMatchPanel        from "./components/AIMatchPanel";
@@ -28,7 +27,7 @@ function DashboardHome() {
     <>
       <StatsRow />
       <div className="dashboard-mid-row">
-        <MapPanel />
+       
         <ActivityFeed />
       </div>
       <div className="dashboard-bottom-row">
@@ -39,19 +38,7 @@ function DashboardHome() {
   );
 }
 
-function MapTracking() {
-  return (
-    <div className="map-tracking-page">
-      <div>
-        <h2 className="page-title">Map Tracking</h2>
-        <p className="page-sub">Live sighting locations and AI detections across all connected cameras</p>
-      </div>
-      <div className="map-tracking-viewport">
-        <MapPanel />
-      </div>
-    </div>
-  );
-}
+
 
 function renderView(activeNav) {
   switch (activeNav) {
@@ -59,7 +46,6 @@ function renderView(activeNav) {
     case "missing":   return <MissingPersonsExplorer />;
     case "sighting":  return <ReportSighting />;
     case "ai-match":  return <AIMatchResults />;
-    case "map":       return <MapTracking />;
     case "timeline":  return <CaseTimeline />;
     case "alerts":    return <Alerts />;
     default:          return <DashboardHome />;
