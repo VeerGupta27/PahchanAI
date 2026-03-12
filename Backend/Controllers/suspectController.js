@@ -5,6 +5,7 @@ import Suspect from "../models/suspectModel.js";
 
 export const addSuspect = async (req, res) => {
   try {
+    console.log("Suspect routes loaded");
 
     const imagePath = req.file?.path;
 
