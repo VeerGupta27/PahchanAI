@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom"
 import LandingPage from "./pages/LandingPage"
 import SignIn from "./components/SignIn"
-import Dashboard from "./pages/Dashboard"
+import Dashboard from "./dashboard/Dashboard"
 
 function App() {
   return (
@@ -10,6 +10,9 @@ function App() {
       <Route path="/signin" element={<SignIn />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/signup" element={<SignIn showSignup={true} />} />
+
+      
+
     </Routes>
   )
 }

@@ -6,10 +6,10 @@ import validator from "validator";
 // REGISTER USER
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, role, email, password } = req.body;
 
     // check missing fields
-    if (!name || !email || !password) {
+    if (!name || !role || !email || !password) {
       return res.json({ success: false, message: "Missing details" });
     }
 
@@ -32,7 +32,8 @@ export const registerUser = async (req, res) => {
     const newUser = new User({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      role
     });
 
     const user = await newUser.save();
@@ -49,7 +50,8 @@ export const registerUser = async (req, res) => {
       user: {
         _id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: user.role
       },
       token
     });
@@ -106,7 +108,8 @@ export const loginUser = async (req, res) => {
       user: {
         _id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: user.role
       },
       token
     });
