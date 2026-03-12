@@ -23,23 +23,31 @@ app.mount("/embeddings", StaticFiles(directory=EMBEDDING_DIR), name="embeddings"
 @app.post("/generate-embedding")
 async def create_embedding(file: UploadFile = File(...)):
 
-    person_id = str(uuid.uuid4())
+    try:
 
-    image_path = os.path.join(TEMP_DIR, person_id + ".jpg")
+        person_id = str(uuid.uuid4())
+        image_path = os.path.join(TEMP_DIR, person_id + ".jpg")
 
-    with open(image_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+        with open(image_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
 
-    embedding = generate_embedding(image_path)
+        embedding = generate_embedding(image_path)
 
-    if embedding is None:
+        if embedding is None:
+            return {
+                "success": False,
+                "message": "No face detected"
+            }
+
+        # 🔴 force safe JSON format
+        embedding = [float(x) for x in embedding]
+
         return {
-            "success": False,
-            "message": "No face detected"
+            "success": True,
+            "person_id": person_id,
+            "embedding": embedding
         }
 
-    return {
-        "success": True,
-        "person_id": person_id,
-        "embedding": embedding
-    }
+    except Exception as e:
+        print("API ERROR:", e)
+        return {"success": False, "error": str(e)}
