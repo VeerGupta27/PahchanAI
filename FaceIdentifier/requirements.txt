@@ -1,0 +1,12 @@
+torch
+facenet-pytorch
+Pillow
+numpy==2.1.0
+faiss-cpu
+fastapi
+uvicorn[standard]
+python-multipart
+pymongo[srv]
+dnspython
+python-dotenv
+opencv-python
